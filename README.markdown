@@ -6,7 +6,7 @@ This is a fork of http://github.com/burke/mongosphinx with many changes to simpl
 
 ## General info
 
-The MongoidSphinx library implements an interface between MongoDB and Sphinx 
+The MongoidSphinx library implements an interface between MongoDB and Sphinx
 supporting Mongoid to automatically index objects in Sphinx. It tries to
 act as transparent as possible: Just an additional method in Mongoid
 and some Sphinx configuration are needed to get going.
@@ -16,17 +16,17 @@ and some Sphinx configuration are needed to get going.
 MongoidSphinx needs gems Mongoid and Riddle as well as a running Sphinx
 and a MongoDB installation. Just add this to your Gemfile:
 
-    gem riddle
-    gem mongoid
-    gem mongoidsphinx, :require => 'mongoid_sphinx'
+    gem 'riddle'
+    gem 'mongoid'
+    gem 'mongoid-sphinx', :require => 'mongoid_sphinx'
 
 No additional configuraton is needed for interfacing with MongoDB: Setup is
 done when Mongoid is able to talk to the MongoDB server.
 
 ## Rake Tasks
 
-MongoidSphinx can now generate your configs and control indexer and searchd through rake 
-tasks (many thanks to Pat Allen for his work on Thinking Sphinx here. Much of the code to 
+MongoidSphinx can now generate your configs and control indexer and searchd through rake
+tasks (many thanks to Pat Allen for his work on Thinking Sphinx here. Much of the code to
 make this happen is right out of TS). Here is a list of the available rake tasks:
 
     mongoid_sphinx:configure # creates a configuration file in congif/{environment}.sphinx.conf
@@ -34,7 +34,7 @@ make this happen is right out of TS). Here is a list of the available rake tasks
     mongoid_sphinx:start     # starts searchd
     mongoid_sphinx:stop      # stops searchd
     mongoid_sphinx:restart   # stops then start searchd
-    
+
 There are also some shortcuts you can use. See lib/mongoid_sphinx/tasks.rb for the full list.
 
 ## Models
@@ -58,7 +58,7 @@ Sample:
       field :created_at, :type => 'DateTime'
       field :comment_count, :type => 'Integer'
 
-      search_index(:fields => [:title, :body], 
+      search_index(:fields => [:title, :body],
                    :attributes => [:created_at, :comment_count],
                    :options => {:stopwords => "#{Rails.root}/config/sphinx/stopwords.txt"})
     end
@@ -68,11 +68,11 @@ You must also create a config/sphinx.yml file with the host and port of your sph
     development:
       address: localhost
       port: 3312
-      
+
     staging:
       address: localhost
       port: 3312
-      
+
     production:
       address: localhost
       port: 3312
@@ -88,7 +88,7 @@ Samples:
 
     Post.search('first')
     => [...]
-    
+
     post = Post.search('this is @title post').first
     post.title
     => "First Post"
@@ -103,7 +103,7 @@ document IDs but return the raw IDs instead.
 Sample:
 
     Post.search('my post', :limit => 100)
-    
+
 You can also specify filters based on attributes. Here is the format:
 
     post = Post.search('first', :with => {:created_at => 1.day.ago..Time.now})
